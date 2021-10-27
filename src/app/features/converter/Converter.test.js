@@ -1,4 +1,5 @@
-import { convert } from './Converter';
+import {convert} from './Converter'
+// TODO: не работает импорт
 
 const valute = [
   {
@@ -40,12 +41,14 @@ const valute = [
 ];
 describe('Converter: ', () => {
   test.each([
-    [valute[2], valute[1], 1, '1.1603'],
-    [valute[1], valute[3], 1, '69.5526'],
-    [valute[3], valute[1], 100, '1.4378'],
-    [valute[0], valute[3], 100, '22.0574'],
-    [valute[2], valute[0], 100, '365.8722'],
+    [valute[2], valute[1], 1, 1.1603],
+    [valute[1], valute[3], 1, 69.5526],
+    [valute[3], valute[1], 100, 1.4378],
+    [valute[0], valute[3], 100, 22.0574],
+    [valute[0], valute[2], 200, 0.5466],
+    [valute[2], valute[0], 1, 365.8722],
   ])('convert(from: %s, to %s, value: %f)', (from, to, value, expected) => {
-    expect(convert(from, to, value)).toBeCloseTo(expected, 0.0002);
+    const result = convert(from, to, value);
+    expect(result).toBeCloseTo(expected, 0.0002);
   });
 });
