@@ -1,9 +1,10 @@
 import React from 'react';
+import Typography from '@mui/material/Typography'
 
 const About = () => {
   return (
     <div>
-      <h1>Nikolai Solomatov</h1>
+      <Typography variant="h3" color="initial">Nikolai Solomatov</Typography>
       <p>Nikosol94@gmail.com</p>
       <p>Fullstack developer</p>
       <ul>

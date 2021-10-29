@@ -1,4 +1,5 @@
-import {convert} from './Converter'
+// const convert = require('./Converter');
+import {convert} from './calcModul';
 // TODO: не работает импорт
 
 const valute = [
@@ -39,6 +40,7 @@ const valute = [
     Previous: 1,
   },
 ];
+
 describe('Converter: ', () => {
   test.each([
     [valute[2], valute[1], 1, 1.1603],
