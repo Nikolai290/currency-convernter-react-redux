@@ -10,10 +10,10 @@ const Navbar = () => {
       <Link class="nav-link" to="/">
           <Tab label="Rates" />
         </Link>
-        <Link class="nav-link" to="/Converter">
+        <Link class="nav-link" to="/converter">
         <Tab label="Converter" />
         </Link>
-        <Link class="nav-link" to="/About">
+        <Link class="nav-link" to="/about">
         <Tab label="About" />
         </Link>
       </Tabs>
