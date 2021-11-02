@@ -1,19 +1,19 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { update } from './ratesSlice';
 import ValuteCard from './ValuteCard';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import IRates from '../entities/Rates';
 
 const Rates = () => {
-  const rates = useSelector((state) => state.rates);
-  const dispatch = useDispatch();
-  const url = process.env.REACT_APP_CBR_URL;
+  const rates: IRates = useAppSelector((state) => state.rates);
+  const dispatch = useAppDispatch();
+  const url = process.env.REACT_APP_CBR_URL as string;
 
   useEffect(() => {
-    if (!rates.Date) {
-      console.log('refresh');
+    if (rates.Date.getDate() !== new Date().getDate()) {
       refresh();
     }
   }, []);
@@ -33,7 +33,7 @@ const Rates = () => {
       <div>
         {rates?.Valute?.map((valute, i) => (
           <div key={i}>
-            <ValuteCard props={valute} />
+            <ValuteCard valute={valute} />
           </div>
         ))}
       </div>

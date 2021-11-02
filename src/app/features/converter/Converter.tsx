@@ -1,7 +1,5 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { convert } from './calcModul';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   updateFrom,
   updateTo,
@@ -15,52 +13,58 @@ import ValuteSelect from './ValuteSelect';
 import TextField from '@mui/material/TextField/TextField';
 import Button from '@mui/material/Button';
 import { Card } from '@mui/material';
-import { minWidth } from '@mui/system';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import IRates from '../entities/Rates';
+import IConvertData from '../entities/ConverterData';
 
 const Converter = () => {
-  const rates = useSelector((state) => state.rates);
-  const convertData = useSelector((state) => state.convertData);
-  const dispatch = useDispatch();
-  const url = process.env.REACT_APP_CBR_URL;
+  const rates: IRates = useAppSelector((state) => state.rates);
+  const convertData: IConvertData = useAppSelector(
+    (state) => state.convertData
+  );
+  const dispatch = useAppDispatch();
+  const url = process.env.REACT_APP_CBR_URL as string;
 
   function refresh() {
     axios.get(url).then((response) => dispatch(update(response.data)));
   }
-  useEffect(() => {
-    console.log(convertData);
-  }, [onValueChangedHandler, onFromChangedHandler, onToChangedHandler]);
 
   useEffect(() => {
-    if (!rates.Date) {
-      console.log('refresh');
-      console.log('convertData on load',convertData);
+    if (rates.Date.getDate() !== new Date().getDate()) {
       refresh();
     }
   }, []);
 
-  function onValueChangedHandler(e) {
-    dispatch(updateValue({ ...convertData, value: e.target.value }));
+  function onValueChangedHandler(e: {
+    target: { value: string | number };
+  }): void {
+    dispatch(updateValue(+e.target.value));
   }
 
-  function onFromChangedHandler(e) {
+  function onFromChangedHandler(e: {
+    target: { value: string | number };
+  }): void {
     dispatch(
-      updateFrom({
-        ...convertData,
-        from: rates.Valute.filter((x) => x.NumCode == e.target.value)[0],
-      })
+      updateFrom(
+        rates.Valute.filter(
+          (x: { NumCode: string | number }) => x.NumCode === e.target.value
+        )[0]
+      )
     );
   }
 
-  function onToChangedHandler(e) {
+  function onToChangedHandler(e: { target: { value: string | number } }): void {
     dispatch(
-      updateTo({
-        ...convertData,
-        to: rates.Valute.filter((x) => x.NumCode == e.target.value)[0],
-      })
+      updateTo(
+        rates.Valute.filter(
+          (x: { NumCode: string | number }) => x.NumCode === e.target.value
+        )[0]
+      )
     );
   }
 
-  function submitHandler(event) {
+  function submitHandler(event: any): void {
+    event.preventDefault();
     dispatch(updateResult());
   }
 
@@ -71,13 +75,12 @@ const Converter = () => {
       </Typography>
       <form
         onSubmit={(e) => {
-          e.preventDefault();
           submitHandler(e);
         }}
       >
         <Box
           component="form"
-          sc={{
+          sx={{
             '& .MuiTextField-root': { m: 1, width: '25ch' },
           }}
           noValidate
@@ -94,9 +97,8 @@ const Converter = () => {
                 padding: 1,
               }}
             >
-
               <Typography variant="body1" color="initial">
-                Из 
+                Из
               </Typography>
               <ValuteSelect
                 valutes={rates.Valute}
@@ -122,7 +124,7 @@ const Converter = () => {
               }}
             >
               <Typography variant="body1" color="initial">
-              В 
+                В
               </Typography>
               <ValuteSelect
                 valutes={rates.Valute}

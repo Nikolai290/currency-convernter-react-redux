@@ -7,14 +7,14 @@ const Navbar = () => {
   return (
     <div>
       <Tabs sx={{ borderBottom: 1, borderColor: 'divider' }}>
-      <Link class="nav-link" to="/">
-          <Tab label="Rates" />
+      <Link className="nav-link" to="/">
+          <Tab label="Rates" value='rates'/>
         </Link>
-        <Link class="nav-link" to="/converter">
-        <Tab label="Converter" />
+        <Link className="nav-link" to="/converter">
+        <Tab label="Converter"  value='converter'/>
         </Link>
-        <Link class="nav-link" to="/about">
-        <Tab label="About" />
+        <Link className="nav-link" to="/about">
+        <Tab label="About"  value='about'/>
         </Link>
       </Tabs>
     </div>
